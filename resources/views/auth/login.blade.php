@@ -76,7 +76,7 @@
                 <div class="mb-3 form-password-toggle">
                     <div class="d-flex justify-content-between">
                         <label class="form-label" for="password">Mật khẩu</label>
-                        <a href="auth-forgot-password-basic.html">
+                        <a href="{{ route('password.request') }}">
                             <small>Bạn quên mật khẩu?</small>
                         </a>
                     </div>

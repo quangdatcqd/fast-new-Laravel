@@ -68,7 +68,10 @@
 
                 @include('layouts.navbar')
                 <div class="content-wrapper">
-                    <div class="alert-notification"> </div>
+                    @if (session('error'))
+                        <div class="alert-notification">{{ session('error') }} </div>
+                    @endif
+
 
                     <div class="container-xxl flex-grow-1 container-p-y">
 

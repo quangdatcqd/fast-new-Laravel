@@ -128,7 +128,9 @@ $(document).ready(function () {
             }
         });
     });
-
+    setTimeout(function () {
+        $('.alert-notification').fadeOut('slow');
+    }, 3000);
 
 
 });

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
@@ -18,14 +19,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
+Route::get('vip', function () {
+});
 Auth::routes();
+Route::middleware('auth', 'role')->group(function () {
+    Route::get('/',  [HomeController::class, 'index'])->name('home');
+    Route::get('/home',  [HomeController::class, 'index'])->name('home');
 
-Route::middleware('auth')->group(function () {
-
-    Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-    Route::prefix('users')->group(function () {
+    Route::middleware('permission')->prefix('users')->group(function () {
         Route::get("list", [UserController::class, "index"])->name('users.list');
         Route::get("edit/{id}", [UserController::class, "edit"])->name('users.edit');;
         Route::delete("delete/{id}", [UserController::class, "destroy"])->name('users.delete');
@@ -35,7 +36,7 @@ Route::middleware('auth')->group(function () {
         Route::post("store", [UserController::class, "store"])->name('users.store');
     });
 
-    Route::prefix('posts')->group(function () {
+    Route::middleware('permission')->prefix('posts')->group(function () {
         Route::get("list", [PostController::class, "index"])->name('posts.list');
         Route::get("list-category/{id}", [PostController::class, "listCategory"])->name('posts.list-category');
 

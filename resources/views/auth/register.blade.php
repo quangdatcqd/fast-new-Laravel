@@ -129,9 +129,9 @@
             </form>
 
             <p class="text-center">
-                <span>Bạn là người mới?</span>
-                <a href="auth-register-basic.html">
-                    <span>Tạo tài khoản</span>
+                <span>Đã có tài khoản?</span>
+                <a href="{{ route('login') }}">
+                    <span>Đăng nhập</span>
                 </a>
             </p>
         </div>
