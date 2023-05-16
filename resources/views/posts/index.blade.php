@@ -28,14 +28,14 @@
             </div>
         @endif
         <div class="table-responsive text-nowrap  table-custom-scroll-bar">
-            <table class="table " style="width: 130%">
+            <table class="table ">
                 <thead>
                     <tr class="text-center bg-table-header">
                         <th width="35px">#</th>
                         <th>Tác giả</th>
                         <th>Danh mục</th>
                         <th>Tiêu đề</th>
-                        <th>Mô tả</th>
+                        {{-- <th>Mô tả</th> --}}
                         <th>Trạng thái</th>
                         <th>Thời gian</th>
                         <th>Thay đổi</th>
@@ -47,11 +47,11 @@
                             <td class="text-center">{{ $loop->index }}</td>
                             <td style=" width:165px;">{{ $post->user_name }}</td>
                             <td>{{ $post->category_name }}</td>
-                            <td class="text-wrap text-start " style="  width:250px;   ">
+                            <td class="text-wrap text-start ">
                                 {{ $post->title }} </td>
-                            <td class="text-wrap text-start">
+                            {{-- <td class="text-wrap text-start">
                                 {{ $post->description }}
-                            </td>
+                            </td> --}}
                             <td style=" width:125px;">{{ $post->hide ? 'Đang ẩn' : 'Đang hiện' }} </td>
                             <td class="td-time" style=" width:165px;">
                                 <p class="m-0">Tạo: {{ $post->post_created_at }}</p>

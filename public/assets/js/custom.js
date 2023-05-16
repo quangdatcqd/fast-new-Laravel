@@ -57,36 +57,36 @@ $(document).ready(function () {
         $(btnUpdate).show();
     })
 
-    // update status
-    $("#table-tbody").on("click", ".btn-update-l", function () {
-        // get tr node
-        const trNode = $(this).parent().parent();
-        const btnUpdate = $(trNode).find(".btn-update-l");
-        const idUser = $(this).attr('id-user');
-        const idStatus = $(this).attr('id-status');
-        const URL = baseURL + `users/update/${idUser}`;
-        //update width ajax
-        $.ajax({
-            url: URL,
-            method: 'POST',
-            contentType: 'application/json',
-            headers: {
-                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-            },
-            data: JSON.stringify({ status: idStatus }),
-            success: function (response) {
-                console.log(response);
-                toastr["success"](response.message);
-                $(btnUpdate).hide();
-            },
-            error: function (xhr, status, error) {
-                console.log(error);
-                toastr["warning"](data.error)
-            }
-        });
+    // // update status
+    // $("#table-tbody").on("click", ".btn-update-l", function () {
+    //     // get tr node
+    //     const trNode = $(this).parent().parent();
+    //     const btnUpdate = $(trNode).find(".btn-update-l");
+    //     const idUser = $(this).attr('id-user');
+    //     const idStatus = $(this).attr('id-status');
+    //     const URL = baseURL + `users/update/${idUser}`;
+    //     //update width ajax
+    //     $.ajax({
+    //         url: URL,
+    //         method: 'POST',
+    //         contentType: 'application/json',
+    //         headers: {
+    //             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+    //         },
+    //         data: JSON.stringify({ status: idStatus }),
+    //         success: function (response) {
+    //             console.log(response);
+    //             toastr["success"](response.message);
+    //             $(btnUpdate).hide();
+    //         },
+    //         error: function (xhr, status, error) {
+    //             console.log(error);
+    //             toastr["warning"](data.error)
+    //         }
+    //     });
 
 
-    })
+    // })
 
 
     // onchange title value for all  
@@ -96,6 +96,38 @@ $(document).ready(function () {
 
     });
 
+    // tự độgn slug cho tag khi tạo mới trong post 
+    $("#title_slug_tag").keyup(function (e) {
+        let titleValue = e.target.value;
+        $("#slug_tag").val(slugify(titleValue.toLowerCase()));
+    });
+
+    // thêm mới nhanh tại trang bài đăng.
+    $("#quick-add-tag").submit(function (e) {
+        e.preventDefault();
+        const name = e.target.name.value;
+        const slug = e.target.slug.value;
+        const URL = baseURL + "tags/store";
+        $.ajax({
+            url: URL,
+            method: 'POST',
+            contentType: 'application/json',
+            headers: {
+                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: JSON.stringify({ name: name, slug: slug }),
+            success: function () {
+
+                toastr["success"]("Thêm thành công!");
+                $("#slug_tag").val("");
+                $("#title_slug_tag").val("");
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+                toastr["warning"](data.error)
+            }
+        });
+    });
 
 
 

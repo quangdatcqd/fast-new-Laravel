@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Permission;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -20,12 +23,8 @@ class UserController extends Controller
 
         try {
 
-            $data_status = DB::table('status_account')->get();
-            $users = DB::table('users')
-                ->join('status_account', 'users.status', '=', 'status_account.id')
-                ->select(['*', 'users.id as id_user', 'status_account.name as status', 'status_account.id as id_tatus', 'users.name as name'])
-                ->paginate(25);
-            return view("users.index", ['data' => $users, 'data_status' => $data_status]);
+            $users = User::paginate(25);
+            return view("users.index", compact('users'));
         } catch (\Throwable $th) {
             //throw $th;
         }
@@ -39,8 +38,9 @@ class UserController extends Controller
     public function create()
     {
         try {
-            $status = DB::table('status_account')->get();
-            return view('users.form_edit', ['data' => $status, 'title' => 'Tạo mới tài khoản']);
+            $roles = Role::all();
+            $permissions = Permission::all();
+            return view('users.form_create', compact('roles', 'permissions'));
         } catch (\Throwable $th) {
             //throw $th;
         }
@@ -54,7 +54,20 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:6', 'confirmed'],
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' =>  $request->email,
+            'role_id' => $request->role,
+            'password' => Hash::make($request->password),
+        ]);
+        $user->permissions()->sync($request->permission);
+        return redirect()->route('users.list');
     }
 
     /**
@@ -76,7 +89,14 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        try {
+            $user = User::find($id);
+            $roles = Role::all();
+            $permissions = Permission::all();
+            return view('users.form_edit', compact('roles', 'permissions', 'user'));
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
     }
 
     /**
@@ -88,20 +108,28 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        try {
-            $result = DB::table('users')->where("id", $id)->update([
-                'status' => $request->status,
-                'updated_at' => Carbon::now('Asia/Ho_Chi_Minh')
+        $validate = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255']
+        ]);
+        $dataStore = [
+            'name' => $request->name,
+            'email' =>  $request->email,
+            'role_id' => $request->role,
+        ];
+        if ($request->password != null) {
+            $request->validate([
+                'password' => ['required', 'string', 'min:6', 'confirmed'],
             ]);
-            $data = [
-                'data' => $result,
-                'message' => 'Cập nhật thành công!',
-                'error_code' => 0
-            ];
-            return response($data, 200);
-        } catch (\Throwable $th) {
-            return response($th, 500);
+            $dataStore["password"] = Hash::make($request->password);
         }
+
+        $user = User::find($id);
+        $user->update($dataStore);
+        $user->save();
+
+        $user->permissions()->sync($request->permission);
+        return redirect()->route('users.list');
     }
 
     /**
@@ -113,10 +141,18 @@ class UserController extends Controller
     public function destroy($id)
     {
         try {
-
-            DB::table('users')->where("id", $id)->delete();
+            $user = User::find($id);
+            $data = [];
+            if ($user->posts()  &&  $user->posts()->count() > 0) {
+                $data = [
+                    'message' => 'Người dùng có bài đăng. không thể xoá!',
+                    'error_code' => 1001
+                ];
+                return response($data, 200);
+            }
+            $user->delete();
             $data = [
-                'message' => 'Xoá thành công!',
+                'message' => 'Đã xoá thành công!',
                 'error_code' => 0
             ];
             return response($data, 200);

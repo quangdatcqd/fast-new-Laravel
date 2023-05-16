@@ -105,14 +105,17 @@
                                         </span>
                                     @enderror
                                 </div>
-
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label" for="sort">Thẻ </label>
+                            <div class="d-flex justify-content-between">
+                                <label class="form-label  " for="sort">Chọn thẻ </label>
+                                <label class="form-label cursor-pointer text-primary " data-bs-toggle="modal"
+                                    data-bs-target="#smallModal"><i class='bx bx-plus'></i> Tạo
+                                    mới </label>
+                            </div>
                             <select class="js-example-basic-single form-select select-search" id="tag-select"
                                 multiple="multiple" name="tags[]">
-
                                 @foreach ($data->tags as $tag)
                                     <option value="{{ $tag->id }}" selected>{{ $tag->title }}</option>
                                 @endforeach
@@ -138,16 +141,21 @@
                         </div>
 
                         <div class="row justify-content-start">
-                            <div class="col-md-6">
+                            <div class="col-md-6 d-flex">
                                 <button type="submit" class="btn btn-primary d-flex align-items-center px-5"><i
                                         class='bx bx-save'></i>&nbsp; Lưu</button>
+                                <a href="{{ route('categories.list') }}"3
+                                    class="btn btn-outline-secondary d-flex align-items-center  ms-3  ">
+                                    <i class='bx bx-x'></i> &nbsp;
+                                    Huỷ bỏ
+                                </a>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-
+        @include('tags.create_modal')
     </div>
     <script>
         tinymce.init({

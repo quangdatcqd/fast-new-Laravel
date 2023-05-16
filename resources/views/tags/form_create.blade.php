@@ -33,34 +33,26 @@
                         <div class="input-group mb-3">
                             <label class="form-label" for="slug">Slug (URL)</label>
                             <div class="input-group">
-                                <input type="text" class="form-control @error('slug') is-invalid @enderror" " name="slug" id="slug"
-                                            placeholder="Nhập slug url">
+                                <input type="text" class="form-control @error('slug') is-invalid @enderror"
+                                    name="slug" id="slug" placeholder="Nhập slug url">
 
-                                    </div>
-                                </div>
-
-                                <div class="row justify-content-start">
-                                    <div class="col-md-6 d-flex">
-                                        <button type="submit" class="btn btn-primary d-flex align-items-center px-5"> <i
-                                                class='bx bx-plus'></i>&nbsp; Thêm</button>
-                                        <a href="{{ route('tags.list') }}"3
-                                            class="btn btn-outline-secondary d-flex align-items-center  ms-3  ">
-                                            <i class='bx bx-x'></i> &nbsp;
-                                            Huỷ bỏ
-                                        </a>
-                                    </div>
-                                </div>
-                            </form>
+                            </div>
                         </div>
-                    </div>
-                </div>
 
+                        <div class="row justify-content-start">
+                            <div class="col-md-6 d-flex">
+                                <button type="submit" class="btn btn-primary d-flex align-items-center px-5"> <i
+                                        class='bx bx-plus'></i>&nbsp; Thêm</button>
+                                <a href="{{ route('tags.list') }}"3
+                                    class="btn btn-outline-secondary d-flex align-items-center  ms-3  ">
+                                    <i class='bx bx-x'></i> &nbsp;
+                                    Huỷ bỏ
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <script>
-                tinymce.init({
-                    selector: 'textarea',
-                    plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
-                    toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
-                });
-            </script>
+        </div>
+    </div>
 @endsection

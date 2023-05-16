@@ -25,7 +25,6 @@ return new class extends Migration
             $table->foreign("user_id")->references("id")->on("users")->onDelete("restrict");
 
             $table->unsignedBigInteger('category_id')->nullable();
-            // KHông được phép xoá category khi có các bài đăng nằm trong danh ;mục
             $table->foreign("category_id")->references("id")->on("categories")->onDelete("restrict");
             $table->integer("views");
             $table->timestamps();

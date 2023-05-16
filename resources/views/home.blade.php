@@ -9,7 +9,7 @@
                 <div class="d-flex align-items-end row">
                     <div class="col-sm-7">
                         <div class="card-body">
-                            <h5 class="card-title text-primary">Congratulations John! 🎉</h5>
+                            <h5 class="card-title text-primary">Xin chào {{ Auth::user()->name }} 🎉</h5>
                             <p class="mb-4">
                                 You have done <span class="fw-bold">72%</span> more sales today. Check your
                                 new badge in
@@ -39,7 +39,7 @@
                                     <img src="../assets/img/icons/unicons/chart-success.png" alt="chart success"
                                         class="rounded" />
                                 </div>
-                                <div class="dropdown">
+                                {{-- <div class="dropdown">
                                     <button class="btn p-0" type="button" id="cardOpt3" data-bs-toggle="dropdown"
                                         aria-haspopup="true" aria-expanded="false">
                                         <i class="bx bx-dots-vertical-rounded"></i>
@@ -48,12 +48,20 @@
                                         <a class="dropdown-item" href="javascript:void(0);">View More</a>
                                         <a class="dropdown-item" href="javascript:void(0);">Delete</a>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
-                            <span class="fw-semibold d-block mb-1">Profit</span>
-                            <h3 class="card-title mb-2">$12,628</h3>
-                            <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i>
-                                +72.80%</small>
+                            <span class="fw-semibold d-block mb-1">Tổng người dùng</span>
+                            <h3 class="card-title mb-2">{{ $usersCount }}</h3>
+                            @if ($usersGrowth > 0)
+                                <small class="text-success fw-semibold">
+                                    <i class="bx bx-up-arrow-alt"></i>
+                                @else
+                                    <small class="text-danger fw-semibold">
+                                        <i class="bx bx-down-arrow-alt"></i>
+                            @endif
+
+                            {{ $usersGrowth }}%
+                            </small>
                         </div>
                     </div>
                 </div>
@@ -65,7 +73,7 @@
                                     <img src="../assets/img/icons/unicons/wallet-info.png" alt="Credit Card"
                                         class="rounded" />
                                 </div>
-                                <div class="dropdown">
+                                {{-- <div class="dropdown">
                                     <button class="btn p-0" type="button" id="cardOpt6" data-bs-toggle="dropdown"
                                         aria-haspopup="true" aria-expanded="false">
                                         <i class="bx bx-dots-vertical-rounded"></i>
@@ -74,12 +82,20 @@
                                         <a class="dropdown-item" href="javascript:void(0);">View More</a>
                                         <a class="dropdown-item" href="javascript:void(0);">Delete</a>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
-                            <span>Sales</span>
-                            <h3 class="card-title text-nowrap mb-1">$4,679</h3>
-                            <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i>
-                                +28.42%</small>
+                            <span class="fw-semibold d-block mb-1">Bài đăng</span>
+                            <h3 class="card-title mb-2">{{ $postsCount }}</h3>
+                            @if ($postsGrowth > 0)
+                                <small class="text-success fw-semibold">
+                                    <i class="bx bx-up-arrow-alt"></i>
+                                @else
+                                    <small class="text-danger fw-semibold">
+                                        <i class="bx bx-down-arrow-alt"></i>
+                            @endif
+
+                            {{ $postsGrowth }}
+                            </small>
                         </div>
                     </div>
                 </div>
@@ -146,8 +162,7 @@
                         <div class="card-body">
                             <div class="card-title d-flex align-items-start justify-content-between">
                                 <div class="avatar flex-shrink-0">
-                                    <img src="../assets/img/icons/unicons/paypal.png" alt="Credit Card"
-                                        class="rounded" />
+                                    <img src="../assets/img/icons/unicons/paypal.png" alt="Credit Card" class="rounded" />
                                 </div>
                                 <div class="dropdown">
                                     <button class="btn p-0" type="button" id="cardOpt4" data-bs-toggle="dropdown"
@@ -194,7 +209,7 @@
                     </div>
                 </div>
                 <!-- </div>
-                                                                                    <div class="row"> -->
+                                                                                                                                                                                                                <div class="row"> -->
                 <div class="col-12 mb-4">
                     <div class="card">
                         <div class="card-body">

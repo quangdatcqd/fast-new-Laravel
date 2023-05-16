@@ -11,14 +11,11 @@ return new class extends Migration
      *
      * @return void
      */
-
     public function up()
     {
-        Schema::create('post_tag', function (Blueprint $table) {
-            $table->unsignedBigInteger("post_id");
-            $table->unsignedBigInteger("tag_id");
-            $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
-            $table->foreign('tag_id')->references('id')->on('tags')->onDelete('cascade');
+        Schema::create('roles', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
         });
     }
 
@@ -29,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('post_tag');
+        Schema::dropIfExists('role_user');
     }
 };

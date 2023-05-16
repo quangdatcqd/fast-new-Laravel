@@ -79,7 +79,12 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label" for="sort">Thẻ </label>
+                            <div class="d-flex justify-content-between">
+                                <label class="form-label  " for="sort">Chọn thẻ </label>
+                                <label class="form-label cursor-pointer text-primary " data-bs-toggle="modal"
+                                    data-bs-target="#smallModal"><i class='bx bx-plus'></i> Tạo
+                                    mới </label>
+                            </div>
                             <select class="js-example-basic-single form-select select-search" multiple="multiple"
                                 name="tags[]"> </select>
                         </div>
@@ -92,17 +97,22 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="row justify-content-start">
-                            <div class="col-md-6">
+                        <div class="row  ">
+                            <div class="col-md-6 d-flex">
                                 <button type="submit" class="btn btn-primary d-flex align-items-center px-5"> <i
                                         class='bx bx-plus'></i> &nbsp; Thêm</button>
+                                <a href="{{ route('posts.list') }}"3
+                                    class="btn btn-outline-secondary d-flex align-items-center  ms-3  ">
+                                    <i class='bx bx-x'></i> &nbsp;
+                                    Huỷ bỏ
+                                </a>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-
+        @include('tags.create_modal')
     </div>
     <script>
         tinymce.init({

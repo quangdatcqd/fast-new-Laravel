@@ -31,8 +31,8 @@ Route::middleware('auth')->group(function () {
         Route::delete("delete/{id}", [UserController::class, "destroy"])->name('users.delete');
         Route::get("create", [UserController::class, "create"])->name('users.create');
 
-        Route::post("update/{id}", [UserController::class, "update"]);
-        Route::get("store", [UserController::class, "store"]);
+        Route::post("update/{id}", [UserController::class, "update"])->name('users.update');
+        Route::post("store", [UserController::class, "store"])->name('users.store');
     });
 
     Route::prefix('posts')->group(function () {
